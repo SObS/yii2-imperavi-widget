@@ -49,6 +49,11 @@ class GetAction extends Action
     public $path;
 
     /**
+     * @var string Thumbs directory URL
+     */
+    public $thumbUrl;
+
+    /**
      * @var string Files directory URL
      */
     public $url;
@@ -78,6 +83,9 @@ class GetAction extends Action
             throw new InvalidConfigException('The "path" attribute must be set.');
         } else {
             $this->path = Yii::getAlias($this->path);
+        }
+        if ($this->thumbUrl !== null) {
+            $this->options['thumbUrl'] = $this->thumbUrl;
         }
     }
 

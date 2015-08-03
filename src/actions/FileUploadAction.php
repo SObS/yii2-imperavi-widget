@@ -9,8 +9,8 @@ use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;
 use yii\helpers\FileHelper;
 use yii\web\BadRequestHttpException;
-use yii\web\Response;
 use yii\web\UploadedFile;
+use yii\web\Response;
 use Yii;
 
 /**
@@ -25,19 +25,10 @@ use Yii;
  * public function actions()
  * {
  *     return [
- *         'upload-image' => [
- *             'class' => 'vova07\imperavi\actions\UploadAction',
- *             'url' => 'http://my-site.com/statics/',
- *             'path' => '/var/www/my-site.com/web/statics',
- *             'validatorOptions' => [
- *                 'maxWidth' => 1000,
- *                 'maxHeight' => 1000
- *             ]
- *         ],
  *         'file-upload' => [
  *             'class' => 'vova07\imperavi\actions\UploadAction',
- *             'url' => 'http://my-site.com/statics/',
- *             'path' => '/var/www/my-site.com/web/statics',
+ *             'url' => 'http://my-site.com/uploads/files/',
+ *             'path' => '@frontend/web/uploads/files/',
  *             'uploadOnlyImage' => false,
  *             'validatorOptions' => [
  *                 'maxSize' => 40000
@@ -51,7 +42,7 @@ use Yii;
  *
  * @link https://github.com/vova07
  */
-class UploadAction extends Action
+class FileUploadAction extends Action
 {
     /**
      * @var string Path to directory where files will be uploaded
@@ -132,11 +123,12 @@ class UploadAction extends Action
                 if ($this->unique === true && $model->file->extension) {
                     $model->file->name = uniqid() . '.' . $model->file->extension;
                 }
+
                 if ($model->file->saveAs($this->path . $model->file->name)) {
-                    $result = ['filelink' => $this->url . $model->file->name];
-                    if ($this->uploadOnlyImage !== true) {
-                        $result['filename'] = $model->file->name;
-                    }
+                        $result = ['filelink' => $this->url . $model->file->name];
+                        if ($this->uploadOnlyImage !== true) {
+                            $result['filename'] = $model->file->name;
+                        }
                 } else {
                     $result = [
                         'error' => Yii::t('vova07/imperavi', 'ERROR_CAN_NOT_UPLOAD_FILE')
