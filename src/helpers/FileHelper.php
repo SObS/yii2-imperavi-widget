@@ -57,10 +57,16 @@ class FileHelper extends BaseFileHelper
                         $url = str_replace([$options['basePath'], '\\'], [$options['url'], '/'], static::normalizePath($path));
 
                         if ($type === GetAction::TYPE_IMAGES) {
+
+                            if(isset($options['thumbUrl'])) {
+                                $thumbUrl = str_replace([$options['basePath'], '\\'], [rtrim($options['thumbUrl'], "/"), '/'], static::normalizePath($path));
+                            }
+
                             $list[] = [
                                 'title' => $file,
-                                'thumb' => $url,
-                                'image' => $url
+                                'thumb' =>  $thumbUrl,
+                                'image' => $url,
+                                'date'  => date ("d M Y, H:i:s", filemtime($path))
                             ];
                         } elseif ($type === GetAction::TYPE_FILES) {
                             $size = self::getFileSize($path);
