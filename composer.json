@@ -26,6 +26,7 @@
         "issues": "https://github.com/vova07/yii2-imperavi-widget/issues?state=open",
         "source": "https://github.com/vova07/yii2-imperavi-widget"
     },
+    "minimum-stability": "stable",
     "require": {
         "yiisoft/yii2": "*"
     },
